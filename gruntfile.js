@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         distDir: 'build',
         clean: {
-            dist: ['<%= distDir %>']
+            dist: ['<%= distDir %>', '.tmp']
         },
         copy: {
             options: {
@@ -122,6 +122,22 @@ module.exports = function(grunt) {
                     overrides: {}
                 }
             }
+        },
+        connect: {
+            dev: {
+                options: {
+                    debug: true,
+                    keepalive: true,
+                    base: ['.','src']
+                }
+            },
+            dist: {
+                options: {
+                    debug: false,
+                    keepalive: true,
+                    base: ['.','<%= distDir %>']
+                }
+            }
         }
     });
 
@@ -131,6 +147,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-usemin');
@@ -140,6 +157,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['dev']);
     grunt.registerTask('dist', ['clean','dev','copy','useminPrepare','concat','uglify','cssmin','filerev','usemin']);
     grunt.registerTask('dev', ['template','wiredep']);
-
+    grunt.registerTask('serve', ['dev', 'connect:dev']);
+    grunt.registerTask('serve-dist', ['dist', 'connect:dist']);
 
 };
