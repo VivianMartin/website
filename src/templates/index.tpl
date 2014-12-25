@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="gum.app">
 <head lang="en">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,8 +18,9 @@
     <!-- endbuild -->
 </head>
 <body>
-<div class="container">
+<div class="container" ng-controller="MainCtrl as main">
     <h2>Working <small>bootstrap on</small></h2>
+    <p>{{main.hello}}</p>
 </div>
 
 
