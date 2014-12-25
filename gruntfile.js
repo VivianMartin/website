@@ -6,12 +6,23 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        distDir: 'build',
+        clean: {
+            dist: ['<%= distDir %>']
+        },
         copy: {
             options: {
                 noProcess: 'src/templates/**'
             },
-            dev: {
+            dist: {
                 files: [
+                    {
+                        src: '*.html',
+                        dest: 'build/',
+                        flatten: false,
+                        expand: true,
+                        cwd: 'src'
+                    },
                     {
                         src: 'js/**',
                         dest: 'build/',
@@ -27,36 +38,47 @@ module.exports = function(grunt) {
                         cwd: 'src'
                     },
                     {
-                        src: '**',
-                        dest: 'build/inc',
-                        flatten: true,
+                        src: 'bower_components/**',
+                        dest: 'build/',
+                        flatten: false,
                         expand: true,
-                        cwd: 'bower_components'
+                        cwd: ''
                     }
                 ]
             }
         },
+        useminPrepare: {
+            options: {
+                dest: '<%= distDir %>'
+            },
+            html: '<%= distDir %>/index.html'
+        },
+        usemin: {
+            options: {
+                //assetsDirs: ['css', 'js']
+            },
+            html: '<%= distDir %>/index.html'
+        },
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-                mangle: false,
-                compress: false
-            },
-            dist: {
-                files: {
-                    'build/js/<%= pkg.name %>.min.js': ['build/js/<%= concat.dist.dest %>']
-                }
+                mangle: true,
+                compress: true
             }
         },
         concat: {
             options: {
                 // define a string to put between each file in the concatenated output
                 separator: ';'
+            }
+        },
+        filerev: {
+            options: {
+                algorithm: 'md5',
+                length: 8
             },
             dist: {
-                files: {
-                    'build/js/<%= pkg.name %>.js': ['src/js/**/*.js']
-                }
+                src: ['<%= distDir %>/js/*.js','<%= distDir %>/css/*.css']
             }
         },
         template: {
@@ -107,14 +129,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-filerev');
 
     // Default task(s).
-    grunt.registerTask('default', ['concat','wiredep']);
-    grunt.registerTask('dev', ['template:dev','wiredep']);
+    grunt.registerTask('default', ['dev']);
+    grunt.registerTask('dist', ['clean','dev','copy','useminPrepare','concat','uglify','cssmin','filerev','usemin']);
+    grunt.registerTask('dev', ['template','wiredep']);
 
 
 };
