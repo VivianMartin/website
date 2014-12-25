@@ -64,30 +64,27 @@ module.exports = function(grunt) {
                 options: {
                     data: {
                         scripts: [
-                            'js/website.js',
-                            'inc/angular.js',
-                            'inc/ui-bootstrap-tpls.js'
+                            'js/**/*.js'
                         ],
                         css: [
-                            'inc/bootstrap.css',
-                            'css/style.css'
+                            'css/**/*.css'
                         ]
                     }
                 },
                 files: {
-                    'build/index.html': ['src/templates/index.tpl']
+                    'src/index.html': ['src/templates/index.tpl']
                 }
 
             }
         },
         wiredep: {
 
-            target: {
+            dist: {
 
                 // Point to the files that should be updated when
                 // you run `grunt wiredep`
                 src: [
-                    'build/index.html',   // .html support...
+                    'src/index.html'   // .html support...
                 ],
 
                 // Optional:
@@ -109,12 +106,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-wiredep');
+    grunt.loadNpmTasks('grunt-usemin');
+    grunt.loadNpmTasks('grunt-filerev');
 
     // Default task(s).
     grunt.registerTask('default', ['concat','wiredep']);
-    grunt.registerTask('dev', ['copy:dev','template:dev']);
+    grunt.registerTask('dev', ['template:dev','wiredep']);
 
 
 };
