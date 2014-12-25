@@ -123,6 +123,16 @@ module.exports = function(grunt) {
                 }
             }
         },
+        less: {
+            options: {
+                paths: ["src/css"]
+            },
+            target: {
+                files: {
+                    "src/css/style.css": "src/css/style.less"
+                }
+            }
+        },
         karma: {
             dev: {
                 configFile: 'test/karma.conf.js',
@@ -154,6 +164,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-usemin');
@@ -163,7 +174,7 @@ module.exports = function(grunt) {
     // Define task(s).
     grunt.registerTask('default', ['dev']);
     grunt.registerTask('dist', ['clean','dev','copy','useminPrepare','concat','uglify','cssmin','filerev','usemin']);
-    grunt.registerTask('dev', ['template','wiredep','test']);
+    grunt.registerTask('dev', ['less','template','wiredep','test']);
     grunt.registerTask('test', ['karma:dev']);
     grunt.registerTask('serve', ['dev', 'connect:dev']);
     grunt.registerTask('serve-dist', ['dist', 'connect:dist']);
