@@ -123,6 +123,12 @@ module.exports = function(grunt) {
                 }
             }
         },
+        karma: {
+            dev: {
+                configFile: 'test/karma.conf.js',
+                singleRun: true
+            }
+        },
         connect: {
             dev: {
                 options: {
@@ -152,11 +158,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-filerev');
+    grunt.loadNpmTasks('grunt-karma');
 
     // Define task(s).
     grunt.registerTask('default', ['dev']);
     grunt.registerTask('dist', ['clean','dev','copy','useminPrepare','concat','uglify','cssmin','filerev','usemin']);
-    grunt.registerTask('dev', ['template','wiredep']);
+    grunt.registerTask('dev', ['template','wiredep','test']);
+    grunt.registerTask('test', ['karma:dev']);
     grunt.registerTask('serve', ['dev', 'connect:dev']);
     grunt.registerTask('serve-dist', ['dist', 'connect:dist']);
 
