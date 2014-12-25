@@ -18,28 +18,28 @@ module.exports = function(grunt) {
                 files: [
                     {
                         src: '*.html',
-                        dest: 'build/',
+                        dest: '<%= distDir %>/',
                         flatten: false,
                         expand: true,
                         cwd: 'src'
                     },
                     {
                         src: 'js/**',
-                        dest: 'build/',
+                        dest: '<%= distDir %>/',
                         flatten: false,
                         expand: true,
                         cwd: 'src'
                     },
                     {
                         src: 'css/**/*.css',
-                        dest: 'build/',
+                        dest: '<%= distDir %>/',
                         flatten: false,
                         expand: true,
                         cwd: 'src'
                     },
                     {
                         src: 'bower_components/**',
-                        dest: 'build/',
+                        dest: '<%= distDir %>/',
                         flatten: false,
                         expand: true,
                         cwd: ''
@@ -84,6 +84,7 @@ module.exports = function(grunt) {
         template: {
             dev: {
                 options: {
+                    // inject template with our app js/css files
                     data: {
                         scripts: [
                             'js/**/*.js'
@@ -124,7 +125,7 @@ module.exports = function(grunt) {
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
+    // Load our plugins
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -135,7 +136,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-filerev');
 
-    // Default task(s).
+    // Define task(s).
     grunt.registerTask('default', ['dev']);
     grunt.registerTask('dist', ['clean','dev','copy','useminPrepare','concat','uglify','cssmin','filerev','usemin']);
     grunt.registerTask('dev', ['template','wiredep']);
