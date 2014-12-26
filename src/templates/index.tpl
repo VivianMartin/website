@@ -23,13 +23,14 @@
     <p>{{main.hello}}</p>
 </div>
 
+    <gum-nav></gum-nav>
 
-    <!-- build:js js/app-lib.js -->
+    <!-- build:js app/app-lib.js -->
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js js/app.js -->
+    <!-- build:js app/app.js -->
     <%
     var scriptsExp = grunt.file.expand({cwd:'src'}, scripts);
     _.forEach(scriptsExp, function(name) { %>

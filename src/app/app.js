@@ -2,7 +2,7 @@
 (function() {
     "use strict";
 
-    angular.module('gum.app', [])
+    angular.module('gum.app', ['gum.nav'])
         .controller('MainCtrl', MainCtrl);
 
     function MainCtrl() {

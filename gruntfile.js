@@ -17,14 +17,14 @@ module.exports = function(grunt) {
             dist: {
                 files: [
                     {
-                        src: '*.html',
+                        src: '**/*.html',
                         dest: '<%= distDir %>/',
                         flatten: false,
                         expand: true,
                         cwd: 'src'
                     },
                     {
-                        src: 'js/**',
+                        src: 'app/**',
                         dest: '<%= distDir %>/',
                         flatten: false,
                         expand: true,
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
                 length: 8
             },
             dist: {
-                src: ['<%= distDir %>/js/*.js','<%= distDir %>/css/*.css']
+                src: ['<%= distDir %>/app/*.js','<%= distDir %>/css/*.css']
             }
         },
         template: {
@@ -87,7 +87,12 @@ module.exports = function(grunt) {
                     // inject template with our app js/css files
                     data: {
                         scripts: [
-                            'js/**/*.js'
+                            'app/**/*.module.js',
+                            'app/**/*.service.js',
+                            'app/**/*.controller.js',
+                            'app/**/*.filter.js',
+                            'app/**/*.directive.js',
+                            'app/app.js'
                         ],
                         css: [
                             'css/**/*.css'
