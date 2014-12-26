@@ -18,9 +18,8 @@
     <!-- endbuild -->
 </head>
 <body>
-<div class="container" ng-controller="MainCtrl as main">
-    <h2>Working <small>bootstrap on</small></h2>
-    <p>{{main.hello}}</p>
+<div class="container" ui-view>
+
 </div>
 
     <gum-nav></gum-nav>
