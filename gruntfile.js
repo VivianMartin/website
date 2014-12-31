@@ -147,8 +147,11 @@ module.exports = function(grunt) {
         connect: {
             dev: {
                 options: {
+                    hostname: 'localhost',
                     debug: true,
-                    keepalive: true,
+                    keepalive: false,
+                    livereload: true,
+                    open: true,
                     base: ['.','src']
                 }
             },
@@ -158,6 +161,23 @@ module.exports = function(grunt) {
                     keepalive: true,
                     base: ['.','<%= distDir %>']
                 }
+            }
+        },
+        watch: {
+            options: {
+                livereload: true
+            },
+            js: {
+                files: ['src/app/**/*.js'],
+                tasks: ['template','wiredep']
+            },
+            less: {
+                files: ['src/css/**/*.less'],
+                tasks: ['less','template','wiredep']
+            },
+            html: {
+                files: ['src/templates/index.tpl', 'src/app/**/*.html'],
+                tasks: ['template','wiredep']
             }
         }
     });
@@ -170,6 +190,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-usemin');
@@ -181,7 +202,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', ['clean','dev','copy','useminPrepare','concat','uglify','cssmin','filerev','usemin']);
     grunt.registerTask('dev', ['less','template','wiredep','test']);
     grunt.registerTask('test', ['karma:dev']);
-    grunt.registerTask('serve', ['dev', 'connect:dev']);
+    grunt.registerTask('serve', ['dev', 'connect:dev', 'watch']);
     grunt.registerTask('serve-dist', ['dist', 'connect:dist']);
 
 };
