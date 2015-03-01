@@ -2,7 +2,7 @@
 (function() {
     "use strict";
 
-    angular.module('gum.app', ['gum.nav', 'ui.router'])
+    angular.module('gum.app', ['gum.nav', 'gum.blog', 'ui.router'])
         .config(ConfigFn)
         .run(RunFn)
         .controller('MainCtrl', MainCtrl);
@@ -21,7 +21,7 @@
         $stateProvider.state('about', {
             url: '/about',
             templateUrl: 'app/about/about.html'
-        })
+        });
     }
 
     RunFn.$inject = ['$rootScope', '$log'];
