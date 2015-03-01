@@ -4,13 +4,13 @@
     angular.module('gum.blog').
         controller('BlogCtrl', BlogCtrl);
 
-    BlogCtrl.$inject = ['$log', '$stateParams', 'latestEntry'];
+    BlogCtrl.$inject = ['$stateParams', 'latestEntry'];
 
-    function BlogCtrl($log, $stateParams, latestEntry) {
-        $log.log($stateParams);
-        this.latestEntry = latestEntry;
+    function BlogCtrl($stateParams, latestEntry) {
+        var vm = this;
 
-        this.params = $stateParams;
+        vm.latestEntry = latestEntry;
+        vm.params = $stateParams;
     }
 })
 ();

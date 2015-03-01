@@ -1,4 +1,4 @@
-describe('gum blog', function() {
+describe('gum app', function() {
     "use strict";
 
     var ctrl;
