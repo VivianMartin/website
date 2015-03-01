@@ -43,6 +43,20 @@ module.exports = function(grunt) {
                         flatten: false,
                         expand: true,
                         cwd: ''
+                    },
+                    {
+                        src: 'fonts/**',
+                        dest: '<%= distDir %>/',
+                        flatten: false,
+                        expand: true,
+                        cwd: 'bower_components/bootstrap-css-only/'
+                    },
+                    {
+                        src: 'fonts/**',
+                        dest: '<%= distDir %>/',
+                        flatten: false,
+                        expand: true,
+                        cwd: 'bower_components/font-awesome/'
                     }
                 ]
             }
@@ -67,10 +81,7 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            options: {
-                // define a string to put between each file in the concatenated output
-                separator: ';'
-            }
+
         },
         filerev: {
             options: {
@@ -157,8 +168,10 @@ module.exports = function(grunt) {
             },
             dist: {
                 options: {
+                    hostname: 'localhost',
                     debug: false,
                     keepalive: true,
+                    open: true,
                     base: ['.','<%= distDir %>']
                 }
             }
